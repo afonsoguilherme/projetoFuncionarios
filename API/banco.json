@@ -16,9 +16,9 @@
   "funcionarios": [
     {
       "id": 1,
-      "nome": "teste",
-      "sobrenome": "oiiii",
-      "dataNasc": "11221993",
+      "nome": "Guilherme ",
+      "sobrenome": "Afonso",
+      "dataNasc": "04/11/1993",
       "cargo": {
         "id": 1,
         "cargo": "Gerente"
@@ -26,9 +26,9 @@
     },
     {
       "id": 2,
-      "nome": "Guilherme2222",
-      "sobrenome": "Afonso",
-      "dataNasc": "04/11/1993",
+      "nome": "Maria",
+      "sobrenome": "Silva",
+      "dataNasc": "01/01/2000",
       "cargo": {
         "id": 2,
         "cargo": "Vendedor"
