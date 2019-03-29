@@ -1,16 +1,22 @@
 <template>
   <div id="app">
-    <Funcionarios />
+    <Nav></Nav>
+    <div class="marginPrincipal">
+      <router-view :key="$route.fullPath"></router-view>
+    </div>
   </div>
 </template>
 
 <script>
-import Funcionarios from './components/Funcionario/Funcionarios.vue'
-
+import Funcionarios from './components/Funcionario/Funcionarios'
+import Cargos from './components/Cargo/Cargos'
+import Nav from './components/_nav/Nav'
 export default {
   name: 'app',
   components: {
-    Funcionarios
+    Funcionarios,
+    Cargos,
+    Nav
   }
 }
 </script>
@@ -28,8 +34,12 @@ body, html {
   margin: 0;
   height: 100%;
 }
+.marginPrincipal{
+  width: 50%;
+  margin: auto;
+}
 #app {
-
+  width: 100%;
 }
 .btn_Danger{
   background-color: red;
@@ -70,5 +80,8 @@ table thead th{
 }
 .colPequeno {
   width: 5%;
+  text-align: right;
+  background-color: rgb(125, 217 , 245);
+  font-weight: bold;
 }
 </style>

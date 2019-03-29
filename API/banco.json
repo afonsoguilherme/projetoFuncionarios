@@ -1,34 +1,38 @@
 {
-  "funcinarios": [
+  "cargos": [
     {
       "id": 1,
-      "nome": "Guilherme",
-      "sobrenome": "Afonso"
+      "cargo": "Gerente"
     },
     {
-      "nome": "José",
-      "sobrenome": "",
-      "id": 3
+      "id": 2,
+      "cargo": "Vendedor"
     },
     {
-      "nome": "Maria",
-      "sobrenome": "",
-      "id": 4
+      "id": 3,
+      "cargo": "Secretária"
+    }
+  ],
+  "funcionarios": [
+    {
+      "id": 1,
+      "nome": "teste",
+      "sobrenome": "oiiii",
+      "dataNasc": "11221993",
+      "cargo": {
+        "id": 1,
+        "cargo": "Gerente"
+      }
     },
     {
-      "nome": "Teste",
-      "sobrenome": "",
-      "id": 5
-    },
-    {
-      "nome": "Teste",
-      "sobrenome": "",
-      "id": 6
-    },
-    {
-      "nome": "Teste",
-      "sobrenome": "",
-      "id": 7
+      "id": 2,
+      "nome": "Guilherme2222",
+      "sobrenome": "Afonso",
+      "dataNasc": "04/11/1993",
+      "cargo": {
+        "id": 2,
+        "cargo": "Vendedor"
+      }
     }
   ]
 }
