@@ -3,7 +3,7 @@
     <div style="display: flex; width: 50%">
       <h2>{{texto}}</h2>
       <div class="voltar">
-          <slot></slot>
+        <slot></slot>
         <button v-show="btnVoltar" class="btn btnVoltar" @click="voltar()">Voltar</button>
       </div>
     </div>
@@ -17,9 +17,9 @@ export default {
     btnVoltar: Boolean
   },
   methods: {
-      voltar(){
-          this.$router.back();
-      }
+    voltar() {
+      this.$router.back();
+    }
   }
 };
 </script>

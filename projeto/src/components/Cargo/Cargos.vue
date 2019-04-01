@@ -4,7 +4,7 @@
     <table>
       <thead>
         <th>Código</th>
-        <th>Cargo</th>
+        <th>Função</th>
         <th>Quantidade</th>
       </thead>
       <tbody v-if="Cargos.length">
@@ -14,13 +14,17 @@
             v-bind:to="`/funcionarios/${cargo.id}`"
             tag="td"
             style="cursor: pointer"
-          >{{cargo.cargo}} {{cargo.sobrenome}}</router-link>
-          <td class="colPequeno" style="text-align: center; width: 20%">
-            {{cargo.qtdFuncionarios}}
-          </td>
+          >{{cargo.nome}} {{cargo.sobrenome}}</router-link>
+          <td class="colPequeno" style="text-align: center; width: 20%">{{cargo.qtdFuncionarios}}</td>
         </tr>
       </tbody>
-      <tfoot v-else>Nenhum cargo encontrado.</tfoot>
+      <tfoot v-else>
+        <tr>
+          <td colspan="3" style="text-align: center">
+            <h5>Nenhum Cargo Encontrado</h5>
+          </td>
+        </tr>
+      </tfoot>
     </table>
   </div>
 </template>
@@ -38,38 +42,37 @@ export default {
   },
   created() {
     this.$http
-      .get('http://localhost:3000/funcionarios')
+      .get("http://localhost:5000/api/funcionario")
       .then(res => res.json())
       .then(funcionarios => {
         this.Funcionarios = funcionarios;
         this.carregarCargos();
-      })
+      });
   },
-  props: {
-    
-  },
+  props: {},
   methods: {
-    pegarQtdFuncionariosPorCargo(){
+    pegarQtdFuncionariosPorCargo() {
       this.Cargos.forEach((cargo, index) => {
-        cargo ={
+        cargo = {
           id: cargo.id,
-          cargo: cargo.cargo,
-          qtdFuncionarios: this.Funcionarios.filter(funcionario => 
-          funcionario.cargo.id == cargo.id).length
-        }
+          nome: cargo.nome,
+          qtdFuncionarios: this.Funcionarios.filter(
+            funcionario => funcionario.cargo.id == cargo.id
+          ).length
+        };
         this.Cargos[index] = cargo;
       });
     },
     carregarCargos() {
       this.$http
-      .get("http://localhost:3000/cargos")
-      .then(res => res.json())
-      .then(cargo => {
-        this.Cargos = cargo
-        this.pegarQtdFuncionariosPorCargo();
-      });
+        .get("http://localhost:5000/api/cargo")
+        .then(res => res.json())
+        .then(cargo => {
+          this.Cargos = cargo;
+          this.pegarQtdFuncionariosPorCargo();
+        });
     }
-  },
+  }
 };
 </script>
 

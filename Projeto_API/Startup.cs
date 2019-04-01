@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using Projeto_API.Data;
 
 namespace Projeto_API
@@ -28,9 +29,13 @@ namespace Projeto_API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DataContext>(
-                x =>  x.UseSqlite(Configuration.GetConnectionString("DefaultConnection"))
+                x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection"))
             );
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2).AddJsonOptions(Options => { Options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore; });
+
+            services.AddScoped<IRepository, Repository>();
+
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,6 +52,7 @@ namespace Projeto_API
             }
 
             //app.UseHttpsRedirection();
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             app.UseMvc();
         }
     }

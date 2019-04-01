@@ -1,4 +1,8 @@
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Projeto_API.Data;
+using Projeto_API.Models;
 
 namespace Projeto_API.Controllers
 {
@@ -6,35 +10,99 @@ namespace Projeto_API.Controllers
     [ApiController]
     public class CargoController : Controller
     {
-        public CargoController()
+        public IRepository _repo { get; }
+        public CargoController(IRepository repo)
         {
-            
+            _repo = repo;
+
         }
         [HttpGet]
-        public IActionResult Get ()
+        public async Task<IActionResult> get()
         {
-            return Ok();
+            try
+            {
+                var results = await _repo.GetAllCargosAsync(true);
+                return Ok(results);
+            }
+            catch (System.Exception)
+            {
+
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Banco de Dados Falhou");
+            }
         }
-        [HttpGet("{FuncionarioId}")]
-        public IActionResult Get (int FuncionarioId)
+        [HttpGet("{CargoId}")]
+        public async Task<IActionResult> getByCargoId(int CargoId)
         {
-            return Ok();
+            try
+            {
+                var results = await _repo.GetFuncionarioAsyncById(CargoId, true);
+                return Ok();
+            }
+            catch (System.Exception)
+            {
+
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Banco de Dados Falhou");
+            }
         }
         [HttpPost]
-        public IActionResult post ()
+        public async Task<IActionResult> post(Cargo model)
         {
-            return Ok();
+            try
+            {
+                _repo.Add(model);
+                if (await _repo.SaveChangesAsync())
+                {
+                    return Created($"/api/funcionario/{model.Id}", model);
+                }
+            }
+            catch (System.Exception)
+            {
+
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Banco de Dados Falhou");
+            }
+            return BadRequest();
         }
-        [HttpPut("{FuncionarioId}")]
-        public IActionResult put (int CargoId)
+        [HttpPut("{CargoId}")]
+        public async Task<IActionResult> Put(int CargoId, Cargo model)
         {
-            return Ok();
+            try
+            {
+                var Cargo = await _repo.GetCargoAsyncById(CargoId, false);
+                if (Cargo == null) return NotFound();
+                _repo.Update(model);
+                if (await _repo.SaveChangesAsync())
+                {
+                    return Created($"api/Cargo/{model.Id}", model);
+                }
+            }
+            catch (System.Exception)
+            {
+
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Banco de Dados Falhou");
+            }
+            return BadRequest();
         }
-        [HttpDelete("{FuncionarioId}")]
-        public IActionResult delete (int CargoId)
+        [HttpDelete("{CargoId}")]
+        public async Task<IActionResult> Delete(int CargoId)
         {
-            return Ok();
+            try
+            {
+                var Cargo = await _repo.GetCargoAsyncById(CargoId, false);
+                if (Cargo == null) return NotFound();
+                _repo.Delete(Cargo);
+                if (await _repo.SaveChangesAsync())
+                {
+                    return Ok();
+                }
+
+            }
+            catch (System.Exception)
+            {
+
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Banco de Dados Falhou");
+            }
+            return BadRequest();
         }
-        
+
     }
 }

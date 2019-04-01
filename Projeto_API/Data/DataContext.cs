@@ -6,9 +6,9 @@ namespace Projeto_API.Data
 {
     public class DataContext : DbContext
     {
-        public DataContext(DbContextOptions<DataContext> options) : base (options) { }
-        public DbSet<Funcionario> Funcionarios {get;set;}
-        public DbSet<Cargo> Cargos {get;set;}
+        public DataContext(DbContextOptions<DataContext> options) : base(options) { }
+        public DbSet<Funcionario> Funcionarios { get; set; }
+        public DbSet<Cargo> Cargos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -39,9 +39,9 @@ namespace Projeto_API.Data
                     }
                 );
 
-                builder.Entity<Cargo>()
-                .HasData(
-                    new List<Cargo>(){
+            builder.Entity<Cargo>()
+            .HasData(
+                new List<Cargo>(){
                         new Cargo(){
                             Id = 1,
                             Nome = "Gerente"
@@ -54,8 +54,8 @@ namespace Projeto_API.Data
                             Id = 3,
                             Nome = "Entregador"
                         }
-                    }
-                );
+                }
+            );
         }
     }
 }
